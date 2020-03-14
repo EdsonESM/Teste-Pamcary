@@ -1,0 +1,13 @@
+<header>
+  <img src="../../../assets/images/logo.png" alt="Logo Pamcary">
+</header>
+
+<nav>
+  <div class="container-nav">
+    <ul>
+      <li *ngFor="let i of itensArray">
+        <a [routerLink]="['/', i['slug']]">{{ i['name'] }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
