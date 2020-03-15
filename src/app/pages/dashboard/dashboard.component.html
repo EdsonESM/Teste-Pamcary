@@ -1,14 +1,10 @@
 <div style="max-width: 1170px; margin: auto;">
   <div style="width: 100%; display: flex; justify-content: space-between; margin-top: 40px;">
-    <ul style="width: 25%; background-color: aquamarine; margin: 0; list-style: none; padding: 0;">
-      <li>Titulo da mensagem  <br> Hora de Cadastro <hr></li>
-      <li>Titulo da mensagem  <br> Hora de Cadastro <hr></li>
-      <li>Titulo da mensagem  <br> Hora de Cadastro <hr></li>
-    </ul>
+    <app-list-messages></app-list-messages>
 
-    <div style="width: 70%;">
+    <div style="width: 70%;" *ngIf="selectedMessage">
       <div style="width: 100%; background-color: blanchedalmond;">
-        Titulo da mensagem <br>
+        {{ selectedMessage.message | slice:0:15 }} <br>
         Hora de Cadastro <br><br>
         Assunto da mensagem <br>
 
@@ -16,7 +12,7 @@
       </div>
 
       <div>
-        <button>Excluir mensagem</button>
+        <button (click)="removeMessage()">Excluir mensagem</button>
       </div>
     </div>
   </div>

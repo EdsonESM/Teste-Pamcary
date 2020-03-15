@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { itens } from '../../mocks/menu-itens';
 
 import { MenuService } from '../../services/menu.service';
 

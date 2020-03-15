@@ -3,52 +3,48 @@
     <mat-form-field class="example-full-width">
       <mat-label>Nome: </mat-label>
       <input formControlName="name" matInput placeholder="Ex. Edson Santos de Moura" required>
+      <mat-error>
+        Nome obrigatório
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Email: </mat-label>
-      <input formControlName="email" matInput [errorStateMatcher]="matcher" placeholder="Ex. pat@example.com" required>
-      <mat-hint>Errors appear instantly!</mat-hint>
-      <!-- <mat-error *ngIf="userForm.email.hasError('email') && !userForm.email.hasError('required')">
-        Please enter a valid email address
+      <input formControlName="email" matInput placeholder="Ex. name@example.com" required>
+      <mat-error>
+        Insira um email válido
       </mat-error>
-      <mat-error *ngIf="userForm.email.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error> -->
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <mat-label>Telefone Celular:</mat-label>
-      <span matPrefix>+55 11 &nbsp;</span>
-      <input formControlName="phone" type="tel" matInput placeholder="99999-9999" (keypress)="!lettersOnly($event);">
+      <mat-label>Telefone Celular: </mat-label>
+      <span matPrefix>+55&nbsp;</span>
+      <input [textMask]="{mask: phoneMask}" formControlName="phone" type="tel" matInput placeholder="(99) 99999-9999" (keypress)="!lettersOnly($event);">
+      <mat-error>
+        Insira um telefone válido
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Assunto:</mat-label>
       <mat-select formControlName="subjectMatter" required>
         <mat-option>--</mat-option>
-        <mat-option value="Orçamento">
-          Orçamento
-        </mat-option>
-        <mat-option value="Dúvida">
-          Dúvida
-        </mat-option>
-        <mat-option value="Elogio">
-          Elogio
-        </mat-option>
-        <mat-option value="Reclamação">
-          Reclamação
+        <mat-option *ngFor="let item of subjectMatterOptions" [value]="item['slug']">
+          {{ item['name'] }}
         </mat-option>
       </mat-select>
-      <!-- <mat-error *ngIf="userForm.subjectMatter.hasError('required')">Please choose an animal</mat-error> -->
-      <!-- <mat-hint>{{userForm.subjectMatter.value?.sound}}</mat-hint> -->
+      <mat-error>
+        Assunto obrigatório
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Mensagem:</mat-label>
-      <textarea formControlName="message" matInput #message maxlength="500" placeholder="Ex. I need help with..." required></textarea>
-      <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+      <textarea matTextareaAutosize matAutosizeMinRows=10 formControlName="message" matInput #message maxlength="500" placeholder="Ex. Eu acho os seriços oferecidos pela Pamcary muit..." required></textarea>
       <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+      <mat-error>
+        Mensagem obrigatória
+      </mat-error>
     </mat-form-field>
 
     <button type="submit" [disabled]="!userForm.valid">Enviar</button>

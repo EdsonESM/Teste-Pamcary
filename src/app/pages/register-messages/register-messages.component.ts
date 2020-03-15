@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { RegisterMessagesService } from '../../services/register-messages.service';
+
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-register-messages',
@@ -18,25 +13,51 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegisterMessagesComponent implements OnInit {
 
-  matcher = new MyErrorStateMatcher();
+  phoneMask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   userForm: any;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.userForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-      email: ['', [Validators.required, Validators.email]],
-      subjectMatter: ['', Validators.required],
-      phone: ['', Validators.pattern('[0-9]*')],
-      message: ['', [Validators.required, Validators.maxLength(500)]],
-    });
+  subjectMatterOptions = this.registerMessagesService.getSubjectMatterOptions();
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private registerMessagesService: RegisterMessagesService,
+    private datePipe: DatePipe
+  ) {
+    this.generateForm();
   }
 
   ngOnInit(): void {
   }
 
-  saveUser() {
+  generateForm() {
+    this.userForm = this.formBuilder.group({
+      name: [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      email: [null, [Validators.required, Validators.email]],
+      subjectMatter: [null, Validators.required],
+      phone: [null],
+      message: [null, [Validators.required, Validators.maxLength(500)]],
+    });
+  }
 
+  saveUser() {
+    this.userForm.value.id = Date.now();
+    this.userForm.value.registrationTime = this.datePipe.transform(Date.now(), 'HH:mm');
+
+    this.registerMessagesService.registerMessage(this.userForm.value);
+
+    this.resetForm();
+  }
+
+  resetForm() {
+    let control: AbstractControl = null;
+    this.userForm.reset();
+    this.userForm.markAsUntouched();
+    Object.keys(this.userForm.controls).forEach((name) => {
+      control = this.userForm.controls[name];
+      control.setErrors(null);
+    });
+    this.userForm.setErrors({ invalid: true });
   }
 
   lettersOnly(evt) {
