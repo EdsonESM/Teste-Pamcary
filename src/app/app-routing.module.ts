@@ -13,6 +13,11 @@ const routes: Routes = [
     data: { preload: true }
   },
   {
+    path: 'register-messages',
+    loadChildren: () => import('../app/pages/register-messages/register-messages.module').then(m => m.RegisterMessagesModule),
+    data: { preload: true }
+  },
+  {
     path: '', redirectTo: 'home', pathMatch: 'full'
   },
   {

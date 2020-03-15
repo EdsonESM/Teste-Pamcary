@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { itens } from '../../mocks/menu-itens';
 
+import { MenuService } from '../../services/menu.service';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -8,11 +10,12 @@ import { itens } from '../../mocks/menu-itens';
 })
 export class MenuComponent implements OnInit {
 
-  itensArray = itens;
+  itensArray = this.menuService.getItensMenu();
 
-  constructor() { }
+  constructor(
+    private menuService: MenuService
+  ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }
