@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../../services/events.service';
+import { Component } from '@angular/core';
+
+// Services
 import { RegisterMessagesService } from '../../services/register-messages.service';
 
 @Component({
@@ -7,22 +8,18 @@ import { RegisterMessagesService } from '../../services/register-messages.servic
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   selectedMessage: any;
 
   constructor(
-    private eventsService: EventsService,
     private registerMessagesService: RegisterMessagesService,
   ) {
     this.getSelectedMessage();
   }
 
-  ngOnInit(): void {
-  }
-
   getSelectedMessage() {
-    this.eventsService.selectedMessage.subscribe(msg => {
+    this.registerMessagesService.selectedMessage.subscribe(msg => {
       this.selectedMessage = msg;
     });
   }
@@ -30,5 +27,4 @@ export class DashboardComponent implements OnInit {
   removeMessage() {
     this.registerMessagesService.removeMessage(this.selectedMessage);
   }
-
 }

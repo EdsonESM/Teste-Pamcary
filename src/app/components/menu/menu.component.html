@@ -6,7 +6,10 @@
   <div class="container-nav">
     <ul>
       <li *ngFor="let i of itensArray">
-        <a [routerLink]="['/', i['slug']]">{{ i['name'] }}</a>
+        <button mat-raised-button [matBadge]="i['slug'] === 'dashboard' ? countMessages : ''" matBadgePosition="before"
+          matBadgeColor="accent" [matTooltip]="i['tooltip']" [routerLink]="['/', i['slug']]">
+          <mat-icon aria-hidden="false">{{ i['icon'] }}</mat-icon> {{ i['name'] }}
+        </button>
       </li>
     </ul>
   </div>

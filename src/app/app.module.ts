@@ -1,14 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
+// Modules
 import { NgModule, LOCALE_ID } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedMaterial } from './modules/shared-material.module';
+
+// Components
 import { AppComponent } from './app.component';
 import { MenuComponent } from '../app/components/menu/menu.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+// Services
 import { MenuService } from '../app/services/menu.service';
 import { RegisterMessagesService } from '../app/services/register-messages.service';
-import { EventsService } from '../app/services/events.service';
 
 // LOCALE CONFIG
 import { registerLocaleData } from '@angular/common';
@@ -24,14 +27,13 @@ registerLocaleData(localePt, 'pt-BR');
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SharedMaterial
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     MenuService,
     RegisterMessagesService,
-    EventsService,
-
   ],
   bootstrap: [AppComponent]
 })

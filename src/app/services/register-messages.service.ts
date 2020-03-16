@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
+// Mocks
 import { subjectMatterOptions } from '../mocks/subjectMatter-options';
 import { messagesSent } from '../mocks/messages-sent';
-
-import { EventsService } from '../services/events.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterMessagesService {
 
-  constructor(private eventsService: EventsService) { }
+  selectedMessage: EventEmitter<any> = new EventEmitter<any>();
+  countMessages: EventEmitter<any> = new EventEmitter<any>();
 
   getSubjectMatterOptions() {
     return subjectMatterOptions;
@@ -20,8 +20,17 @@ export class RegisterMessagesService {
     return messagesSent;
   }
 
+  setCountMessages(messages) {
+    this.countMessages.emit(messages.length);
+  }
+
+  setSelectedMessage(msg) {
+    this.selectedMessage.emit(msg);
+  }
+
   registerMessage(msg) {
     messagesSent.push(msg);
+    this.setCountMessages(messagesSent);
   }
 
   removeMessage(msg) {
@@ -29,7 +38,8 @@ export class RegisterMessagesService {
       if (m.id === msg.id) {
         messagesSent.splice(i, 1);
 
-        this.eventsService.setSelectedMessage(undefined);
+        this.setSelectedMessage(undefined);
+        this.setCountMessages(messagesSent);
       }
     });
   }

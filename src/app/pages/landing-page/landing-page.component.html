@@ -1,3 +1,14 @@
-<div style="max-width: 1170px; margin: auto; text-align:center">
-  <h1 style="margin: 100px;">Bem vindo ao sistema de Mensagens!</h1>
+<div class="container">
+  <h1>Bem vindo ao sistema de Mensagens!</h1>
+  <h2>Para começar, escolha uma das opções abaixo:</h2>
+
+  <div class="container-buttons">
+    <button mat-raised-button matTooltip="Cadastre uma mensagem" routerLink="/register-messages">
+      <mat-icon aria-hidden="false">question_answer</mat-icon> Cadastrar Mensagens
+    </button>
+    <button mat-raised-button [matBadge]="countMessages" matBadgePosition="before" matBadgeColor="accent"
+      matTooltip="Visualize todas as mensagens" routerLink="/dashboard">
+      <mat-icon aria-hidden="false">list</mat-icon> Dashboard
+    </button>
+  </div>
 </div>

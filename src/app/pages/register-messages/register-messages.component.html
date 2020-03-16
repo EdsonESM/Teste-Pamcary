@@ -1,6 +1,6 @@
-<div style="max-width: 1170px; margin: auto; padding: 0 30px; margin-top: 40px;">
-  <form class="example-form" [formGroup]="userForm" (submit)="saveUser()">
-    <mat-form-field class="example-full-width">
+<div class="container">
+  <form [formGroup]="registerForm" (submit)="saveMessage()">
+    <mat-form-field>
       <mat-label>Nome: </mat-label>
       <input formControlName="name" matInput placeholder="Ex. Edson Santos de Moura" required>
       <mat-error>
@@ -8,7 +8,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <mat-label>Email: </mat-label>
       <input formControlName="email" matInput placeholder="Ex. name@example.com" required>
       <mat-error>
@@ -16,10 +16,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <mat-label>Telefone Celular: </mat-label>
-      <span matPrefix>+55&nbsp;</span>
-      <input [textMask]="{mask: phoneMask}" formControlName="phone" type="tel" matInput placeholder="(99) 99999-9999" (keypress)="!lettersOnly($event);">
+      <!-- <span matPrefix>+55&nbsp;</span> -->
+      <input [textMask]="{mask: phoneMask}" formControlName="phone" type="tel" matInput placeholder="(99) 99999-9999"
+        (keypress)="!lettersOnly($event);">
       <mat-error>
         Insira um telefone válido
       </mat-error>
@@ -38,15 +39,18 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <mat-label>Mensagem:</mat-label>
-      <textarea matTextareaAutosize matAutosizeMinRows=10 formControlName="message" matInput #message maxlength="500" placeholder="Ex. Eu acho os seriços oferecidos pela Pamcary muit..." required></textarea>
+      <textarea matTextareaAutosize matAutosizeMinRows=10 formControlName="message" matInput #message maxlength="500"
+        placeholder="Ex. Eu acho os seriços oferecidos pela Pamcary muit..." required></textarea>
       <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
       <mat-error>
         Mensagem obrigatória
       </mat-error>
     </mat-form-field>
 
-    <button type="submit" [disabled]="!userForm.valid">Enviar</button>
+    <div class="container-button">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid" matTooltip="Enviar mensagem">Enviar</button>
+    </div>
   </form>
 </div>

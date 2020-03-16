@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+
+// Mocks
 import { menuItens } from '../mocks/menu-itens';
 
 @Injectable({
@@ -6,9 +8,8 @@ import { menuItens } from '../mocks/menu-itens';
 })
 export class MenuService {
 
-  constructor() { }
-
   getItensMenu() {
     return menuItens;
   }
+
 }

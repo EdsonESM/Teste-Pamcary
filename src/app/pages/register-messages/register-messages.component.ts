@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
+// Material
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+// Form
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
+// Services
 import { RegisterMessagesService } from '../../services/register-messages.service';
 
+// Pipes
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -11,27 +17,25 @@ import { DatePipe } from '@angular/common';
   templateUrl: './register-messages.component.html',
   styleUrls: ['./register-messages.component.scss']
 })
-export class RegisterMessagesComponent implements OnInit {
+export class RegisterMessagesComponent {
 
   phoneMask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-  userForm: any;
+  registerForm: any;
 
   subjectMatterOptions = this.registerMessagesService.getSubjectMatterOptions();
 
   constructor(
     private formBuilder: FormBuilder,
     private registerMessagesService: RegisterMessagesService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private matSnackBar: MatSnackBar
   ) {
     this.generateForm();
   }
 
-  ngOnInit(): void {
-  }
-
   generateForm() {
-    this.userForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
       email: [null, [Validators.required, Validators.email]],
       subjectMatter: [null, Validators.required],
@@ -40,24 +44,39 @@ export class RegisterMessagesComponent implements OnInit {
     });
   }
 
-  saveUser() {
-    this.userForm.value.id = Date.now();
-    this.userForm.value.registrationTime = this.datePipe.transform(Date.now(), 'HH:mm');
+  saveMessage() {
+    this.getAdditionalInfoMessage();
 
-    this.registerMessagesService.registerMessage(this.userForm.value);
+    this.registerMessagesService.registerMessage(this.registerForm.value);
 
     this.resetForm();
+
+    this.openSnackBar('Mensagem cadastrada com sucesso!!', '');
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.matSnackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
+
+  getAdditionalInfoMessage() {
+    this.registerForm.value.id = Date.now();
+    this.registerForm.value.registrationTime = this.datePipe.transform(Date.now(), 'HH:mm');
   }
 
   resetForm() {
     let control: AbstractControl = null;
-    this.userForm.reset();
-    this.userForm.markAsUntouched();
-    Object.keys(this.userForm.controls).forEach((name) => {
-      control = this.userForm.controls[name];
+
+    this.registerForm.reset();
+    this.registerForm.markAsUntouched();
+
+    Object.keys(this.registerForm.controls).forEach((name) => {
+      control = this.registerForm.controls[name];
       control.setErrors(null);
     });
-    this.userForm.setErrors({ invalid: true });
+
+    this.registerForm.setErrors({ invalid: true });
   }
 
   lettersOnly(evt) {

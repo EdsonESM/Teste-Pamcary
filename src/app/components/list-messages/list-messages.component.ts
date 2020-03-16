@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { RegisterMessagesService } from '../../services/register-messages.service';
-import { EventsService } from '../../services/events.service';
 
 @Component({
   selector: 'app-list-messages',
@@ -14,18 +13,17 @@ export class ListMessagesComponent implements OnInit {
 
   constructor(
     private registerMessagesService: RegisterMessagesService,
-    private eventsService: EventsService
   ) { }
 
   ngOnInit(): void {
     if (this.allMessages.length > 0) {
-      this.eventsService.setSelectedMessage(this.allMessages[0]);
+      this.registerMessagesService.setSelectedMessage(this.allMessages[0]);
     }
   }
 
   changeSelectedMessage(id) {
     const newMessageSelected = this.allMessages.filter(msg => msg.id === id);
-    this.eventsService.setSelectedMessage(newMessageSelected[0]);
+    this.registerMessagesService.setSelectedMessage(newMessageSelected[0]);
   }
 
 }
