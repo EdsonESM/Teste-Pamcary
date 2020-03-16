@@ -16,7 +16,7 @@ export class MenuComponent {
 
   constructor(
     private menuService: MenuService,
-    private registerMessagesService: RegisterMessagesService,
+    private registerMessagesService: RegisterMessagesService
   ) {
     this.getCountMessages();
   }
