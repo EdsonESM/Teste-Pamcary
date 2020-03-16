@@ -12,5 +12,14 @@
         </button>
       </li>
     </ul>
+
+    <div class="menu-mobile">
+      <button mat-raised-button [matMenuTriggerFor]="menu">
+        <mat-icon aria-hidden="false">sort</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let i of itensArray" mat-menu-item [routerLink]="['/', i['slug']]"><mat-icon aria-hidden="false">{{ i['icon'] }}</mat-icon> {{ i['name'] }}</button>
+      </mat-menu>
+    </div>
   </div>
 </nav>

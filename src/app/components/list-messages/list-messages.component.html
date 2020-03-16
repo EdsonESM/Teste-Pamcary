@@ -1,5 +1,9 @@
-<ul style="width: 90%; background-color: aquamarine; margin: 0; list-style: none; padding: 0;">
-  <li *ngFor="let message of allMessages" (click)="changeSelectedMessage(message.id)">{{ message.message | slice:0:15 }}... <br> {{ message.registrationTime }}
-    <hr>
-  </li>
-</ul>
+<mat-list>
+  <ng-container *ngFor="let msg of allMessages">
+    <mat-list-item [class.disabled]="messageSelected.id === msg.id" (click)="changeSelectedMessage(msg.id)">
+      <p class="title">{{ msg.message | slice:0:30 }}...</p>
+      <p class="time">Cadastrada ás: {{ msg.registrationTime | date:'HH:mm' }}</p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-list>

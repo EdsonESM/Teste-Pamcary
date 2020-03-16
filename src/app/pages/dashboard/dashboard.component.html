@@ -1,19 +1,27 @@
-<div style="max-width: 1170px; margin: auto;">
-  <div style="width: 100%; display: flex; justify-content: space-between; margin-top: 40px;">
-    <app-list-messages></app-list-messages>
+<div class="container">
+  <app-list-messages></app-list-messages>
 
-    <div style="width: 70%;" *ngIf="selectedMessage">
-      <div style="width: 100%; background-color: blanchedalmond;">
-        {{ selectedMessage.message | slice:0:15 }} <br>
-        Hora de Cadastro <br><br>
-        Assunto da mensagem <br>
+  <mat-card *ngIf="selectedMessage">
+    <mat-card-header>
+      <mat-card-title>{{ selectedMessage.message | slice:0:30 }}...</mat-card-title>
+      <mat-card-subtitle>Cadastrada ás: {{ selectedMessage.registrationTime | date:'HH:mm' }}</mat-card-subtitle>
+      <mat-card-subtitle>Assunto: {{ selectedMessage.subjectMatter }}</mat-card-subtitle>
+    </mat-card-header>
+    <hr>
+    <mat-card-content>
+      <p>Mensagem: {{ selectedMessage.message }}</p>
+    </mat-card-content>
+    <hr>
+    <mat-card-footer>
+      <button mat-raised-button color="warn" matTooltip="Excluir esta mensagem" (click)="removeMessage()">Excluir mensagem</button>
+    </mat-card-footer>
+  </mat-card>
 
-        Asaasdasdasd asd aasdasdaw awda wdad awd w 
-      </div>
+  <mat-card *ngIf="!selectedMessage && countMessages > 0">
+    <-- Selecione uma mensagem ao lado
+  </mat-card>
 
-      <div>
-        <button (click)="removeMessage()">Excluir mensagem</button>
-      </div>
-    </div>
-  </div>
+  <mat-card class="zeroMessages" *ngIf="!selectedMessage && countMessages === 0">
+    Nenhuma mensagem foi encontrada, cadastre uma <a routerLink="/register-messages">aqui</a>.
+  </mat-card>
 </div>

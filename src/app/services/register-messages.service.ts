@@ -26,6 +26,7 @@ export class RegisterMessagesService {
 
   setSelectedMessage(msg) {
     this.selectedMessage.emit(msg);
+    this.setCountMessages(messagesSent);
   }
 
   registerMessage(msg) {

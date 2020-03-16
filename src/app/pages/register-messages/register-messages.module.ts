@@ -16,9 +16,6 @@ import { RegisterMessagesComponent } from './register-messages.component';
 // Mask Plugin
 import { TextMaskModule } from 'angular2-text-mask';
 
-// Pipes
-import { DatePipe } from '@angular/common';
-
 @NgModule({
   declarations: [RegisterMessagesComponent],
   imports: [
@@ -31,9 +28,6 @@ import { DatePipe } from '@angular/common';
     MatSelectModule,
     MatSnackBarModule,
     SharedMaterial
-  ],
-  providers: [
-    DatePipe
   ]
 })
 export class RegisterMessagesModule { }

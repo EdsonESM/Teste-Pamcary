@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
+// Services
 import { RegisterMessagesService } from '../../services/register-messages.service';
 
 @Component({
@@ -7,18 +8,26 @@ import { RegisterMessagesService } from '../../services/register-messages.servic
   templateUrl: './list-messages.component.html',
   styleUrls: ['./list-messages.component.scss']
 })
-export class ListMessagesComponent implements OnInit {
+export class ListMessagesComponent {
 
   allMessages = this.registerMessagesService.getAllMessages();
+  messageSelected: any;
 
   constructor(
     private registerMessagesService: RegisterMessagesService,
-  ) { }
+  ) {
+    this.getMessageSelected();
+    this.initializeMessage();
+  }
 
-  ngOnInit(): void {
+  initializeMessage() {
     if (this.allMessages.length > 0) {
       this.registerMessagesService.setSelectedMessage(this.allMessages[0]);
     }
+  }
+
+  getMessageSelected() {
+    this.registerMessagesService.selectedMessage.subscribe(msg => this.messageSelected = msg);
   }
 
   changeSelectedMessage(id) {

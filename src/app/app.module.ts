@@ -9,6 +9,9 @@ import { SharedMaterial } from './modules/shared-material.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from '../app/components/menu/menu.component';
 
+// Pipes
+import { DatePipe } from '@angular/common';
+
 // Services
 import { MenuService } from '../app/services/menu.service';
 import { RegisterMessagesService } from '../app/services/register-messages.service';
@@ -22,7 +25,7 @@ registerLocaleData(localePt, 'pt-BR');
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +34,10 @@ registerLocaleData(localePt, 'pt-BR');
     SharedMaterial
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    DatePipe,
     MenuService,
     RegisterMessagesService,
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
   ],
   bootstrap: [AppComponent]
 })
